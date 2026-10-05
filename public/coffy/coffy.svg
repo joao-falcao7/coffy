@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="600" height="600">
+<!-- placeholder do mascote sem fundo, trocar pela arte final -->
+<ellipse cx="150" cy="282" rx="85" ry="9" fill="#120b1a" opacity="0.5"/>
+<path d="M226 120 L262 268" stroke="#a87a52" stroke-width="8" stroke-linecap="round"/>
+<path d="M248 248 L276 240 L282 280 Q270 292 258 284 Z" fill="#b8c0c8" stroke="#120b1a" stroke-width="5" stroke-linejoin="round"/>
+<path d="M120 38 L180 38 L218 92 L196 266 L104 266 L82 92 Z" fill="#8a5a3c" stroke="#120b1a" stroke-width="6" stroke-linejoin="round"/>
+<path d="M126 50 L174 50 L204 94 L186 254 L114 254 L96 94 Z" fill="#a06c48"/>
+<path d="M150 58 L150 92 M138 70 L162 70" stroke="#d9a877" stroke-width="7" stroke-linecap="round"/>
+<ellipse cx="128" cy="136" rx="15" ry="18" fill="#f3ead6" stroke="#120b1a" stroke-width="4"/>
+<ellipse cx="172" cy="136" rx="15" ry="18" fill="#f3ead6" stroke="#120b1a" stroke-width="4"/>
+<circle cx="132" cy="140" r="7" fill="#120b1a"/>
+<circle cx="168" cy="140" r="7" fill="#120b1a"/>
+<ellipse cx="110" cy="166" rx="11" ry="6" fill="#f28c28" opacity="0.6"/>
+<ellipse cx="190" cy="166" rx="11" ry="6" fill="#f28c28" opacity="0.6"/>
+<path d="M124 170 Q150 202 176 170 Z" fill="#120b1a" stroke="#120b1a" stroke-width="4" stroke-linejoin="round"/>
+<rect x="142" y="170" width="12" height="11" rx="2" fill="#f3ead6"/>
+<path d="M200 170 Q222 160 228 128" stroke="#120b1a" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M200 170 Q222 160 228 128" stroke="#8a5a3c" stroke-width="6" fill="none" stroke-linecap="round"/>
+<ellipse cx="128" cy="270" rx="16" ry="9" fill="#8a5a3c" stroke="#120b1a" stroke-width="5"/>
+<ellipse cx="172" cy="270" rx="16" ry="9" fill="#8a5a3c" stroke="#120b1a" stroke-width="5"/>
+</svg>

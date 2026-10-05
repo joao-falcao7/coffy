@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* paleta coffy: vira utilitarios tipo bg-night, text-bone, border-outline */
+@theme {
+  --color-night: #241733;
+  --color-panel: #3a2752;
+  --color-outline: #120b1a;
+  --color-bone: #f3ead6;
+  --color-pumpkin: #f28c28;
+  --color-goo: #9be564;
+
+  --color-wood-dark: #8a5a3c;
+  --color-wood: #a06c48;
+  --color-wood-light: #d9a877;
+
+  --color-stone: #9aa0b4;
+  --color-stone-light: #b2b8ca;
+  --color-stone-dark: #5d6378;
+
+  --font-display: var(--font-fredoka), ui-rounded, system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+
+  --animate-dig: dig 0.7s ease-in-out infinite;
+
+  @keyframes dig {
+    0%, 100% { transform: translateY(0) rotate(-4deg); }
+    50% { transform: translateY(10px) rotate(4deg); }
+  }
+}
+
+/* site e sempre noite, sem modo claro */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-bone);
+  font-family: var(--font-mono);
+}
