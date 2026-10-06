@@ -41,7 +41,7 @@ export function WalletForm() {
         Perform autopsy
       </button>
       {error && <p className="font-mono text-xs text-pumpkin">{error}</p>}
-      <p className="font-mono text-xs text-stone-light">
+      <p className="font-mono text-xs text-bone/80">
         Read-only. No wallet connect, no signatures. Just your on-chain history.
       </p>
     </form>

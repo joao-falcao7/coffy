@@ -8,12 +8,12 @@ export type CoffyExpression =
 
 // mascote trocavel: quando a arte final chegar, apontar cada expressao pro arquivo em /public/coffy
 export const coffySources: Record<CoffyExpression, string> = {
-  default: "/coffy/coffy.svg",
-  laughing: "/coffy/coffy.svg",
-  crying: "/coffy/coffy.svg",
-  fainted: "/coffy/coffy.svg",
-  digging: "/coffy/coffy.svg",
-  winking: "/coffy/coffy.svg",
+  default: "/coffy/coffy-default.png",
+  laughing: "/coffy/coffy-laughing.png",
+  crying: "/coffy/coffy-crying.png",
+  fainted: "/coffy/coffy-fainted.png",
+  digging: "/coffy/coffy-digging.png",
+  winking: "/coffy/coffy-winking.png",
 };
 
 // expressao do coffy por faixa de nota

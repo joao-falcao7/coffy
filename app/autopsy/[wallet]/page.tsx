@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { AutopsyResult } from "@/components/AutopsyResult";
-import { NightSky } from "@/components/NightSky";
+import { Graveyard } from "@/components/Graveyard";
 import { SiteHeader } from "@/components/SiteHeader";
 import { isSolanaAddress, shortAddress } from "@/lib/wallet";
 
@@ -34,7 +34,7 @@ export default async function AutopsyPage({
 
   return (
     <main className="relative flex flex-1 flex-col">
-      <NightSky />
+      <Graveyard dim="strong" className="inset-x-0 top-0 h-[85vh]" />
       <SiteHeader />
       <AutopsyResult wallet={wallet} />
     </main>

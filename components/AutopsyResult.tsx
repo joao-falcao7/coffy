@@ -76,7 +76,7 @@ function Loading() {
   return (
     <section className="relative mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center gap-6 px-4 py-16">
       <Coffy expression="digging" priority size={220} className="h-48 w-48 animate-dig" />
-      <p aria-live="polite" className="font-mono text-sm text-stone-light">
+      <p aria-live="polite" className="font-mono text-sm text-bone">
         {loadingMessages[i]}
       </p>
     </section>
@@ -87,8 +87,8 @@ function ErrorState({ message }: { message: string }) {
   return (
     <section className="relative mx-auto flex w-full max-w-xl flex-1 flex-col items-center gap-6 px-4 py-16 text-center">
       <Coffy expression="crying" size={200} className="h-44 w-44" />
-      <h1 className="font-display text-3xl font-bold">The autopsy failed</h1>
-      <p className="font-mono text-sm text-stone-light">{message}</p>
+      <h1 className="cartoon-text font-display text-3xl font-bold">The autopsy failed</h1>
+      <p className="font-mono text-sm text-bone">{message}</p>
       <div className="w-full">
         <WalletForm />
       </div>
@@ -120,10 +120,10 @@ function Result({ autopsy }: { autopsy: Autopsy }) {
   return (
     <section className="relative mx-auto flex w-full max-w-3xl flex-col gap-8 px-4 pb-16 pt-4">
       <div className="flex items-center gap-4">
-        <Coffy expression={expressionForScore(autopsy.score)} size={120} className="h-24 w-24 shrink-0" />
+        <Coffy expression={expressionForScore(autopsy.score)} size={200} className="animate-float h-28 w-28 shrink-0 sm:h-36 sm:w-36" />
         <div className="flex flex-col gap-2">
           <Stamp>Subject {short}</Stamp>
-          <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">
+          <h1 className="cartoon-text font-display text-3xl font-bold leading-tight sm:text-4xl">
             Cause of death: <span className="text-pumpkin">{autopsy.causeOfDeath}</span>
           </h1>
         </div>

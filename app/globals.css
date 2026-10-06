@@ -21,10 +21,35 @@
   --font-mono: var(--font-space-mono), ui-monospace, monospace;
 
   --animate-dig: dig 0.7s ease-in-out infinite;
+  --animate-float: float 3.2s ease-in-out infinite;
 
   @keyframes dig {
     0%, 100% { transform: translateY(0) rotate(-4deg); }
     50% { transform: translateY(10px) rotate(4deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-12px) rotate(2deg); }
+  }
+}
+
+/* titulo cartoon: contorno escuro grosso + sombra chapada */
+.cartoon-text {
+  -webkit-text-stroke: 6px var(--color-outline);
+  paint-order: stroke fill;
+  text-shadow: 0 5px 0 var(--color-outline);
+}
+
+/* sombra chapada de desenho animado */
+.cartoon-shadow {
+  box-shadow: 0 6px 0 var(--color-outline);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-dig {
+    animation: none;
   }
 }
 

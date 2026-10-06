@@ -19,7 +19,7 @@ export function Coffy({
       width={size}
       height={size}
       priority={priority}
-      className={className}
+      className={`drop-shadow-[0_8px_0_rgba(18,11,26,0.6)] ${className}`}
     />
   );
 }
