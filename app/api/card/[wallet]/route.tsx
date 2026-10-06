@@ -29,8 +29,8 @@ async function dataUri(src: string) {
   return `data:${mime};base64,${file.toString("base64")}`;
 }
 
-const background = dataUri("/coffy/bg-graveyard.png");
-const tombstone = dataUri("/coffy/tombstone.png");
+const background = dataUri("/art/bg-graveyard.png");
+const tombstone = dataUri("/art/tombstone.png");
 
 // lapide: 744x900 no arquivo, desenhada com 540 de altura
 const TOMB_H = 540;

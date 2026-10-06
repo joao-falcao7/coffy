@@ -1,9 +1,8 @@
 import { Coffy } from "@/components/Coffy";
 import { CopyButton } from "@/components/CopyButton";
-import { Graveyard } from "@/components/Graveyard";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Stamp } from "@/components/Stamp";
-import { WalletForm } from "@/components/WalletForm";
+import { TombstoneHero } from "@/components/TombstoneHero";
 import type { CoffyExpression } from "@/lib/coffy";
 import { site } from "@/lib/site";
 
@@ -28,39 +27,7 @@ const steps: { title: string; text: string; expression: CoffyExpression }[] = [
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
-      {/* hero */}
-      <section className="relative overflow-hidden">
-        <Graveyard />
-        <SiteHeader />
-
-        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center gap-6 px-4 pb-16 pt-2 md:flex-row md:gap-12 md:pb-24 md:pt-10">
-          <div className="flex w-full flex-col gap-5 md:flex-1">
-            <Stamp className="bg-night/70">Wallet Autopsy</Stamp>
-            <h1 className="cartoon-text font-display text-4xl font-bold leading-[1.1] sm:text-6xl">
-              Paste your wallet.{" "}
-              <span className="text-pumpkin">Coffy performs the autopsy.</span>
-            </h1>
-            <p className="max-w-md font-mono text-sm leading-relaxed text-bone drop-shadow-[0_2px_0_#120b1a] md:text-base">
-              Find out what killed your portfolio: cause of death, worst trade,
-              bad habits and a final score. Then get a tombstone to share.
-            </p>
-            <div className="rounded-2xl border-4 border-outline bg-night/80 p-4 backdrop-blur-sm">
-              <WalletForm />
-            </div>
-          </div>
-
-          <div className="relative order-first md:order-none">
-            <Coffy
-              priority
-              size={420}
-              className="animate-float h-60 w-60 sm:h-80 sm:w-80 md:h-96 md:w-96"
-            />
-            <Stamp rotate={12} className="absolute right-0 top-6 bg-night/80 text-sm">
-              REKT
-            </Stamp>
-          </div>
-        </div>
-      </section>
+      <TombstoneHero header={<SiteHeader />} />
 
       {/* como funciona */}
       <section className="border-y-4 border-outline bg-panel px-4 py-14">

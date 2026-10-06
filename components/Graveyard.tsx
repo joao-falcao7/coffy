@@ -11,7 +11,7 @@ export function Graveyard({
   return (
     <div aria-hidden className={`pointer-events-none absolute overflow-hidden ${className}`}>
       <Image
-        src="/coffy/bg-graveyard.webp"
+        src="/art/bg-graveyard.webp"
         alt=""
         fill
         priority

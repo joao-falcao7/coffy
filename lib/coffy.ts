@@ -6,14 +6,14 @@ export type CoffyExpression =
   | "digging"
   | "winking";
 
-// mascote trocavel: quando a arte final chegar, apontar cada expressao pro arquivo em /public/coffy
+// mascote trocavel: quando a arte final chegar, apontar cada expressao pro arquivo em /public/art
 export const coffySources: Record<CoffyExpression, string> = {
-  default: "/coffy/coffy-default.png",
-  laughing: "/coffy/coffy-laughing.png",
-  crying: "/coffy/coffy-crying.png",
-  fainted: "/coffy/coffy-fainted.png",
-  digging: "/coffy/coffy-digging.png",
-  winking: "/coffy/coffy-winking.png",
+  default: "/art/coffy-default.png",
+  laughing: "/art/coffy-laughing.png",
+  crying: "/art/coffy-crying.png",
+  fainted: "/art/coffy-fainted.png",
+  digging: "/art/coffy-digging.png",
+  winking: "/art/coffy-winking.png",
 };
 
 // expressao do coffy por faixa de nota
