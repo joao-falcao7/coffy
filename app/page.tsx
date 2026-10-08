@@ -28,10 +28,11 @@ const steps: { title: string; text: string; expression: CoffyExpression }[] = [
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
-      <TombstoneHero header={<SiteHeader />} />
+      <SiteHeader />
+      <TombstoneHero />
 
       {/* como funciona */}
-      <section className="border-y-4 border-outline bg-panel px-4 py-14">
+      <section id="how-it-works" className="border-y-4 border-outline bg-panel px-4 py-14">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-8">
           <h2 className="cartoon-text font-display text-4xl font-bold">How it works</h2>
           <ol className="grid gap-5 md:grid-cols-3">

@@ -109,6 +109,14 @@
 /* site e sempre noite, sem modo claro */
 html {
   color-scheme: dark;
+  /* ancora nao fica escondida atras da barra fixa do topo */
+  scroll-padding-top: 72px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {

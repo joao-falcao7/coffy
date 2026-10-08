@@ -15,7 +15,7 @@ const MOODS: CoffyExpression[] = ["default", "digging", "crying", "winking", "la
 
 type Dust = { id: number; x: number; y: number; dx: number; dy: number; size: number };
 
-export function TombstoneHero({ header }: { header: React.ReactNode }) {
+export function TombstoneHero() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const stoneRef = useRef<HTMLDivElement>(null);
@@ -180,6 +180,7 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
 
   return (
     <section
+      id="top"
       className="relative overflow-hidden"
       onPointerMove={onPointerMove}
       onPointerLeave={onPointerLeave}
@@ -196,7 +197,6 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
             "radial-gradient(circle 260px at var(--mx, 50%) var(--my, 40%), rgba(242,140,40,0.22), transparent 70%)",
         }}
       />
-      {header}
 
       <div className="relative mx-auto grid w-full max-w-5xl items-center gap-6 px-4 pb-14 pt-2 md:grid-cols-2 md:gap-10 md:pb-20 md:pt-8">
         <div className="flex flex-col gap-4">
