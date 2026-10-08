@@ -7,6 +7,12 @@ export const site = {
   pumpFunUrl: null as string | null,
 };
 
+// enderecos publicos usados nos chips "try a token" / "try a wallet"
+export const examples = {
+  token: "DgACXKn6kSopTrFAyAwvGaeTKicrqWzLvXRYuvKGpump",
+  wallet: "suqh5sHtr8HyJ7q8scBimULPkPpA557prMG47xCHQfK",
+};
+
 // url publica do site: dominio proprio via env, senao a url de producao da vercel
 export function siteUrl() {
   if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;

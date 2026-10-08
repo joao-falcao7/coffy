@@ -19,8 +19,8 @@ const spaceMono = Space_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),
-  title: "Coffy — Wallet Autopsy",
-  description: "Paste your Solana wallet and Coffy performs the autopsy.",
+  title: "Coffy — Pre-mortem & Wallet Autopsy",
+  description: "Paste a token or a wallet. Coffy tells you if it's already dead.",
 };
 
 export const viewport: Viewport = {

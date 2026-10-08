@@ -168,3 +168,6 @@ export async function GET(
     },
   );
 }
+
+// fila da helius em pico pode demorar; da folga antes do timeout da funcao
+export const maxDuration = 60;

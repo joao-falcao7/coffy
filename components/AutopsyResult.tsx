@@ -10,6 +10,7 @@ import { site } from "@/lib/site";
 import { shortAddress } from "@/lib/wallet";
 
 const loadingMessages = [
+  "Opening the coffin...",
   "Grabbing the shovel...",
   "Digging through your trades...",
   "Counting the rugs...",
@@ -23,7 +24,7 @@ const MIN_LOADING_MS = 2500;
 
 type State =
   | { status: "loading" }
-  | { status: "error"; message: string }
+  | { status: "error"; message: string; busy?: boolean }
   | { status: "done"; autopsy: Autopsy };
 
 export function AutopsyResult({ wallet }: { wallet: string }) {
@@ -41,7 +42,12 @@ export function AutopsyResult({ wallet }: { wallet: string }) {
         if (wait > 0) await new Promise((r) => setTimeout(r, wait));
         if (cancelled) return;
         if (!res.ok) {
-          setState({ status: "error", message: data.error ?? "Something went wrong." });
+          // 429/503: helius ou rate limit, mostra o coffy cavando
+          setState({
+            status: "error",
+            message: data.error ?? "Something went wrong.",
+            busy: res.status === 429 || res.status === 503,
+          });
         } else {
           setState({ status: "done", autopsy: data });
         }
@@ -61,7 +67,7 @@ export function AutopsyResult({ wallet }: { wallet: string }) {
   }, [wallet]);
 
   if (state.status === "loading") return <Loading />;
-  if (state.status === "error") return <ErrorState message={state.message} />;
+  if (state.status === "error") return <ErrorState message={state.message} busy={state.busy} />;
   return <Result autopsy={state.autopsy} />;
 }
 
@@ -83,11 +89,17 @@ function Loading() {
   );
 }
 
-function ErrorState({ message }: { message: string }) {
+function ErrorState({ message, busy }: { message: string; busy?: boolean }) {
   return (
     <section className="relative mx-auto flex w-full max-w-xl flex-1 flex-col items-center gap-6 px-4 py-16 text-center">
-      <Coffy expression="crying" size={200} className="h-44 w-44" />
-      <h1 className="cartoon-text font-display text-3xl font-bold">The autopsy failed</h1>
+      <Coffy
+        expression={busy ? "digging" : "crying"}
+        size={200}
+        className={`h-44 w-44 ${busy ? "animate-dig" : ""}`}
+      />
+      <h1 className="cartoon-text font-display text-3xl font-bold">
+        {busy ? "Too many graves" : "The autopsy failed"}
+      </h1>
       <p className="font-mono text-sm text-bone">{message}</p>
       <div className="w-full">
         <WalletForm />

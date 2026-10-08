@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { Graveyard } from "@/components/Graveyard";
 import { Stamp } from "@/components/Stamp";
 import { coffySources, type CoffyExpression } from "@/lib/coffy";
+import { examples } from "@/lib/site";
 import { isSolanaAddress } from "@/lib/wallet";
 
 const BASE58_CHARS = /^[1-9A-HJ-NP-Za-km-z]*$/;
@@ -27,7 +28,9 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
   const [typing, setTyping] = useState(false);
   const [focused, setFocused] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState(false);
+  // mensagem de erro (endereco invalido ou falha no inspect)
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const error = errorMsg !== null;
   const [dust, setDust] = useState<Dust[]>([]);
   const [tilting, setTilting] = useState(false);
   // so mostra a gravacao depois que a pedra carregar (senao o texto fica flutuando)
@@ -50,14 +53,16 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
           : "default";
 
   const caption = submitting
-    ? "Coffy is grabbing the shovel..."
-    : error || badChars
-      ? "That's not a Solana address. Coffy is crying."
-      : valid
-        ? "Ready for burial. Hit the button."
-        : value
-          ? "Coffy is carving..."
-          : "Paste a wallet. Watch it get engraved.";
+    ? "Coffy is checking what's in the coffin..."
+    : errorMsg
+      ? errorMsg
+      : badChars
+        ? "That's not a Solana address. Coffy is crying."
+        : valid
+          ? "Ready. Coffy will figure out if it's a token or a wallet."
+          : value
+            ? "Coffy is carving..."
+            : "Paste a token CA or a wallet. Watch it get engraved.";
 
   function onChange(next: string) {
     const clean = next.replace(/\s/g, "");
@@ -67,7 +72,7 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
 
     setValue(clean);
     setCarveFrom(common);
-    setError(false);
+    setErrorMsg(null);
 
     if (added > 0) {
       setTyping(true);
@@ -96,10 +101,11 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
     setTimeout(() => setDust((d) => d.filter((p) => !ids.has(p.id))), 800);
   }
 
-  function onSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (submitting) return;
     if (!valid) {
-      setError(true);
+      setErrorMsg("That's not a Solana address. Coffy is crying.");
       return;
     }
     setSubmitting(true);
@@ -108,7 +114,31 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
     stone?.classList.remove("thud");
     void stone?.offsetWidth;
     stone?.classList.add("thud");
-    setTimeout(() => router.push(`/autopsy/${value}`), 700);
+
+    // descobre se e token ou wallet e vai pra pagina certa
+    const started = Date.now();
+    try {
+      const res = await fetch(`/api/inspect?address=${value}`);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Coffy dropped his shovel. Try again in a minute.");
+      const wait = 700 - (Date.now() - started);
+      if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+      router.push(data.kind === "token" ? `/premortem/${value}` : `/autopsy/${value}`);
+    } catch (err) {
+      setSubmitting(false);
+      setErrorMsg(err instanceof Error ? err.message : "Coffy dropped his shovel. Try again in a minute.");
+    }
+  }
+
+  // chips de exemplo preenchem o campo (e gravam na lapide)
+  function tryExample(address: string) {
+    setValue(address);
+    setCarveFrom(0);
+    setErrorMsg(null);
+    setTyping(true);
+    clearTimeout(typingTimer.current);
+    typingTimer.current = setTimeout(() => setTyping(false), 1600);
+    spawnDust(14, address.length);
   }
 
   // inclina a lapide e move a luz conforme o mouse (so em telas com hover)
@@ -170,14 +200,15 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
 
       <div className="relative mx-auto grid w-full max-w-5xl items-center gap-6 px-4 pb-14 pt-2 md:grid-cols-2 md:gap-10 md:pb-20 md:pt-8">
         <div className="flex flex-col gap-4">
-          <Stamp className="bg-night/70">Wallet Autopsy</Stamp>
+          <Stamp className="bg-night/70">Pre-mortem · Autopsy</Stamp>
           <h1 className="cartoon-text font-display text-4xl font-bold leading-[1.1] sm:text-6xl">
-            Paste your wallet.{" "}
-            <span className="text-pumpkin">Coffy performs the autopsy.</span>
+            Paste a token or a wallet.{" "}
+            <span className="text-pumpkin">Coffy tells you if it&apos;s already dead.</span>
           </h1>
           <p className="hidden max-w-md font-mono text-base leading-relaxed text-bone drop-shadow-[0_2px_0_#120b1a] md:block">
-            Find out what killed your portfolio: cause of death, worst trade, bad
-            habits and a final score. Then get a tombstone to share.
+            Paste a token CA before you ape: Coffy checks how many coins the dev
+            already buried, who holds the supply and if the authorities are
+            revoked. Paste a wallet to see what killed it.
           </p>
 
           {/* form no desktop fica na coluna do texto */}
@@ -192,6 +223,7 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
             onBlur={() => setFocused(false)}
             caption={caption}
             alert={error || badChars}
+            onExample={tryExample}
             submitting={submitting}
           />
         </div>
@@ -260,7 +292,7 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
                   ))
                 ) : (
                   <span className="engraved text-center opacity-60" style={{ fontSize: "5.4cqw" }}>
-                    your wallet
+                    token or wallet
                     <br />
                     goes here
                   </span>
@@ -321,6 +353,7 @@ export function TombstoneHero({ header }: { header: React.ReactNode }) {
           onBlur={() => setFocused(false)}
           caption={caption}
           alert={error || badChars}
+          onExample={tryExample}
           submitting={submitting}
         />
       </div>
@@ -340,6 +373,7 @@ function WalletInput({
   caption,
   alert,
   submitting,
+  onExample,
 }: {
   id: string;
   className: string;
@@ -352,6 +386,7 @@ function WalletInput({
   caption: string;
   alert: boolean;
   submitting: boolean;
+  onExample: (address: string) => void;
 }) {
   return (
     <form
@@ -371,7 +406,7 @@ function WalletInput({
         onChange={(e) => onChange(e.target.value)}
         onFocus={onFocus}
         onBlur={onBlur}
-        placeholder="Paste a Solana wallet address"
+        placeholder="Paste a token CA or a wallet"
         autoComplete="off"
         spellCheck={false}
         className="w-full rounded-xl border-4 border-outline bg-bone px-4 py-3 font-mono text-sm text-outline placeholder:text-stone-dark focus:outline-none focus:ring-4 focus:ring-pumpkin/50"
@@ -381,14 +416,31 @@ function WalletInput({
         disabled={submitting}
         className="cartoon-shadow rounded-xl border-4 border-outline bg-pumpkin px-6 py-3 font-display text-xl font-bold text-outline transition-transform hover:-translate-y-0.5 active:translate-y-1 disabled:opacity-80"
       >
-        {submitting ? "Burying..." : "Perform autopsy"}
+        {submitting ? "Digging..." : "Check it"}
       </button>
       <p
         aria-live="polite"
         className={`font-mono text-xs ${alert ? "text-pumpkin" : "text-bone/80"}`}
       >
-        {caption} Read-only, no wallet connect.
+        {caption}
       </p>
+      <div className="flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => onExample(examples.token)}
+          className="rounded-full border-[3px] border-outline bg-panel px-3 py-1 font-display text-sm font-bold text-goo hover:bg-night"
+        >
+          Try a token
+        </button>
+        <button
+          type="button"
+          onClick={() => onExample(examples.wallet)}
+          className="rounded-full border-[3px] border-outline bg-panel px-3 py-1 font-display text-sm font-bold text-pumpkin hover:bg-night"
+        >
+          Try a wallet
+        </button>
+        <span className="font-mono text-xs text-bone/80">Read-only, no wallet connect.</span>
+      </div>
     </form>
   );
 }

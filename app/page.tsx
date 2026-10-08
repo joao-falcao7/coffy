@@ -4,25 +4,26 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { Stamp } from "@/components/Stamp";
 import { TombstoneHero } from "@/components/TombstoneHero";
 import type { CoffyExpression } from "@/lib/coffy";
+import { DISCLAIMER } from "@/lib/premortem/present";
 import { site } from "@/lib/site";
 
 const steps: { title: string; text: string; expression: CoffyExpression }[] = [
   {
-    title: "Paste a wallet",
-    text: "Any Solana address. Yours, your friend's, that guy who keeps calling tops.",
+    title: "Paste a token or wallet",
+    text: "One field. Coffy figures out if it's a token CA or a wallet. Read-only, no wallet connect.",
     expression: "winking",
   },
   {
-    title: "Coffy digs",
-    text: "He reads the on-chain trades and runs the numbers: PnL, worst trade, rugs held to zero.",
+    title: "Coffy digs through the chain",
+    text: "For a token: how many coins the dev already buried, who holds the supply, and if the authorities are revoked. For a wallet: PnL, worst trade, bags held to zero.",
     expression: "digging",
   },
   {
-    title: "Get buried",
-    text: "A full autopsy report plus a tombstone card with your epitaph, ready to post on X.",
+    title: "Get the verdict (and the tombstone)",
+    text: "ALIVE, IN THE ICU or ALREADY IN THE COFFIN, plus a card ready to post on X.",
     expression: "laughing",
   },
-];
+]
 
 export default function Home() {
   return (
@@ -111,8 +112,8 @@ export default function Home() {
 
       <footer className="mt-auto border-t-4 border-outline bg-outline px-4 py-6">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-1 font-mono text-xs text-bone/80 sm:flex-row sm:justify-between">
-          <span>Coffy · Wallet Autopsy</span>
-          <span>Not financial advice. Mostly roasts.</span>
+          <span>Coffy · Pre-mortem &amp; Wallet Autopsy</span>
+          <span>{DISCLAIMER}</span>
         </div>
       </footer>
     </main>

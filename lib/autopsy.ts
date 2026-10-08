@@ -1,3 +1,4 @@
+import { cached } from "@/lib/cache";
 import { fetchSymbols, fetchWalletTxs, HeliusError } from "@/lib/helius";
 import { buildPositions, computeMetrics, extractActivity } from "@/lib/metrics";
 import { fetchPricesSol } from "@/lib/prices";
@@ -74,18 +75,12 @@ export function computeScore(m: Metrics): number {
   return Math.round(Math.max(0, Math.min(100, score)));
 }
 
-// cache em memoria por instancia (cache compartilhado entra junto com o rate limit)
-const CACHE_TTL_MS = 30 * 60 * 1000;
-const cache = new Map<string, { expires: number; promise: Promise<Autopsy> }>();
+// autopsia por wallet fica 30 min no cache compartilhado
+const AUTOPSY_TTL = 30 * 60;
 
-export function getAutopsy(wallet: string): Promise<Autopsy> {
-  const hit = cache.get(wallet);
-  if (hit && hit.expires > Date.now()) return hit.promise;
-
-  const promise = runAutopsy(wallet);
-  cache.set(wallet, { expires: Date.now() + CACHE_TTL_MS, promise });
-  promise.catch(() => cache.delete(wallet));
-  return promise;
+export async function getAutopsy(wallet: string): Promise<Autopsy> {
+  const { value } = await cached(`autopsy:${wallet}`, AUTOPSY_TTL, () => runAutopsy(wallet));
+  return value;
 }
 
 async function runAutopsy(wallet: string): Promise<Autopsy> {
